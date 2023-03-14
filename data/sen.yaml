@@ -1,0 +1,21 @@
+# train: E:/坚果云/Python from jupyter file/Urban Governance Garbage Exposure Detection Algorithm Competition/yolov5/train_data/train.txt
+# val: E:/坚果云/Python from jupyter file/Urban Governance Garbage Exposure Detection Algorithm Competition/yolov5/train_data/val.txt
+path: E:/Python from jupyter file/Urban Governance Garbage Exposure Detection Algorithm Competition/yolov5  # dataset root dir
+train: ../train_data/train.txt  # train images (relative to 'path') 128 images
+val: ../train_data/val.txt  # val images (relative to 'path') 128 images
+test:  ../train_data/test.txt # test images (optional)
+# number of classes
+nc: 10
+
+# classesnames
+names:
+  0: paper_trash
+  1: packed_trash
+  2: snakeskin_bag
+  3: plastic_trash
+  4: carton
+  5: stone_waste
+  6: sand_waste
+  7: foam_trash
+  8: metal_waste
+  9: wood_waste
