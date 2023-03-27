@@ -41,6 +41,12 @@ ROOT = FILE.parents[0]  # YOLOv5 root directory
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))  # add ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+#print(ROOT)
+import yaml
+with open('./data/sen.yaml', mode='r', encoding='utf-8') as stream:
+    data_1 = yaml.safe_load(stream)
+stream.close()
+data_root_path = data_1['path'] # 数据集的一个根目录，即为sen.yaml里面的path
 
 from models.common import DetectMultiBackend
 from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages, LoadScreenshots, LoadStreams
@@ -239,13 +245,13 @@ def run(
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp29/weights/best.pt',
+    parser.add_argument('--weights', nargs='+', type=str, default=ROOT / 'runs/train/exp/weights/best.pt',
                         help='model path or triton URL')
-    parser.add_argument('--source', type=str, default=ROOT / 'test_data', help='file/dir/URL/glob/screen/0(webcam)')
+    parser.add_argument('--source', type=str, default=data_root_path + '/test_data', help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--data', type=str, default=ROOT / 'data/sen.yaml', help='(optional) dataset.yaml path')
-    parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
+    parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[1344], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.20, help='confidence threshold')
-    parser.add_argument('--iou-thres', type=float, default=0.55, help='NMS IoU threshold')
+    parser.add_argument('--iou-thres', type=float, default=0.50, help='NMS IoU threshold')
     parser.add_argument('--max-det', type=int, default=1000, help='maximum detections per image')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='show results')
@@ -269,7 +275,6 @@ def parse_opt():
     parser.add_argument('--vid-stride', type=int, default=1, help='video frame-rate stride')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
-    #print('接下来是opt')
     print_args(vars(opt))
 
     return opt
